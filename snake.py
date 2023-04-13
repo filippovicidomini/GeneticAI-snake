@@ -4,13 +4,9 @@
 # i want to use pygame to display the game
 # i want to use pygame to display the genetic algorithm
 
-import pygame
 import random
-import time
-import math
-import numpy as np
-import os
-import sys
+
+import pygame
 
 # initialize pygame
 pygame.init()
@@ -18,7 +14,6 @@ pygame.init()
 # create the screen
 
 screen = pygame.display.set_mode((800, 600))
-
 
 # title and icon
 pygame.display.set_caption("Snake")
@@ -34,7 +29,11 @@ snakeY = 480
 snakeX_change = 0
 snakeY_change = 0
 snake_length = 1
-
+# want to display the snake as a list of coordinates
+snake_list = []
+snake_head = []
+snake_head = [snakeX, snakeY]
+snake_list.append(snake_head)
 
 # food
 foodImg = pygame.image.load('food.png')
@@ -53,23 +52,33 @@ textY = 10
 # game over text
 over_font = pygame.font.Font('freesansbold.ttf', 64)
 
+
 def show_score(x, y):
     score = font.render("Score : " + str(score_value), True, (255, 255, 255))
     screen.blit(score, (x, y))
+
 
 def game_over_text():
     over_text = over_font.render("GAME OVER", True, (255, 255, 255))
     screen.blit(over_text, (200, 250))
 
-def snake(x, y):
-    screen.blit(snakeImg, (x, y))
+
+def snake(snake_list):
+    # print snake in all the coordinates in the list
+    for i in snake_list:
+        screen.blit(snakeImg, (i[0], i[1]))
+
+
 
 def food(x, y):
     screen.blit(foodImg, (x, y))
 
+
 # game loop
 running = True
+counter = 0
 while running:
+
     # RGB - Red, Green, Blue
     screen.fill((0, 0, 0))
     for event in pygame.event.get():
@@ -95,9 +104,18 @@ while running:
 
     snakeX += snakeX_change
     snakeY += snakeY_change
+    counter += 1
 
-    # condition for the snake to stay in the screen
+    if counter == 32:
+        snake_head = [snakeX, snakeY]
+        snake_list.append(snake_head)
+        counter = 0
 
+    # remove the first element of the list
+    if len(snake_list) > snake_length:
+        del snake_list[0]
+
+    # conditioni al contorno
     if snakeX <= 10:
         snakeX = 736
     elif snakeX >= 736:
@@ -108,7 +126,7 @@ while running:
     elif snakeY >= 536:
         snakeY = 50
 
-    snake(snakeX, snakeY)
+    snake(snake_list)
     food(foodX, foodY)
     show_score(textX, textY)
     pygame.display.update()
@@ -117,7 +135,16 @@ while running:
         foodX = random.randint(0, 735)
         foodY = random.randint(50, 535)
         score_value += 1
-
-        # the snake is longer now
         snake_length += 1
+
+
+    # check if the snake has hit itself:
+    for cell in snake_list[:-1]:
+        if abs(cell[0] - snakeX) < 15 and abs(cell[1] - snakeY) < 15:
+            game_over_text()
+            pygame.display.update()
+            running = False
+
+    print(snake_list)
+    print(snake_head)
 pygame.quit()
