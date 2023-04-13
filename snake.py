@@ -3,7 +3,7 @@
 # i want to use a neural network to control the snake
 # i want to use pygame to display the game
 # i want to use pygame to display the genetic algorithm
-
+import math
 import random
 
 import pygame
@@ -140,11 +140,9 @@ while running:
 
     # check if the snake has hit itself:
     for cell in snake_list[:-1]:
-        if abs(cell[0] - snakeX) < 15 and abs(cell[1] - snakeY) < 15:
+        if math.sqrt((cell[0] - snakeX) ** 2 + (cell[1] - snakeY) ** 2) < 10:
             game_over_text()
             pygame.display.update()
             running = False
 
-    print(snake_list)
-    print(snake_head)
 pygame.quit()
