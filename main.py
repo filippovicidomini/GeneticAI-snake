@@ -33,6 +33,8 @@ snakeX = 370
 snakeY = 480
 snakeX_change = 0
 snakeY_change = 0
+snake_length = 1
+
 
 # food
 foodImg = pygame.image.load('food.png')
@@ -74,37 +76,48 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+
+        velocity = 0.5
         # if keystroke is pressed check whether its right or left
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                snakeX_change = -5
+                snakeX_change = -velocity
                 snakeY_change = 0
             if event.key == pygame.K_RIGHT:
-                snakeX_change = 5
+                snakeX_change = velocity
                 snakeY_change = 0
             if event.key == pygame.K_UP:
-                snakeY_change = -5
+                snakeY_change = -velocity
                 snakeX_change = 0
             if event.key == pygame.K_DOWN:
-                snakeY_change = 5
+                snakeY_change = velocity
                 snakeX_change = 0
 
     snakeX += snakeX_change
     snakeY += snakeY_change
 
-    if snakeX <= 0:
-        snakeX = 0
-    elif snakeX >= 736:
+    # condition for the snake to stay in the screen
+
+    if snakeX <= 10:
         snakeX = 736
+    elif snakeX >= 736:
+        snakeX = 10
 
     if snakeY <= 50:
-        snakeY = 50
-    elif snakeY >= 536:
         snakeY = 536
+    elif snakeY >= 536:
+        snakeY = 50
 
     snake(snakeX, snakeY)
     food(foodX, foodY)
     show_score(textX, textY)
     pygame.display.update()
 
+    if snakeX - foodX < 32 and snakeX - foodX > -32 and snakeY - foodY < 32 and snakeY - foodY > -32:
+        foodX = random.randint(0, 735)
+        foodY = random.randint(50, 535)
+        score_value += 1
+
+        # the snake is longer now
+        snake_length += 1
 pygame.quit()
