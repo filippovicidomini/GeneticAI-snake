@@ -71,6 +71,7 @@ def snake(snake_list):
 
 
 def food(x, y):
+    # print food in the coordinates
     screen.blit(foodImg, (x, y))
 
 
