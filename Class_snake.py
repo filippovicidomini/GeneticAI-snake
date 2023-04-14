@@ -7,7 +7,7 @@ import numpy as np
 
 class Snake:
     def __init__(self):
-        self.score = 0
+        self.score = 1 # one because the snake start with one point
         self.brain = np.random.normal(0, 1, (5, 4))
 
     def workspace(self, num):
@@ -67,9 +67,32 @@ class Snake:
         self.put_snake()
         self.put_food()
 
+    def move_snake(self, direction):
+        if direction == 0:
+            self.grid[self.position_of_snake[0], self.position_of_snake[1] + 1] = 1
+            if self.grid[self.position_of_snake[0], self.position_of_snake[1] + 1] == 2:
+                self.score += 1
+                self.put_food()
+        elif direction == 1:
+            self.grid[self.position_of_snake[0], self.position_of_snake[1] - 1] = 1
+            if self.grid[self.position_of_snake[0], self.position_of_snake[1] - 1] == 2:
+                self.score += 1
+                self.put_food()
+        elif direction == 2:
+            self.grid[self.position_of_snake[0] + 1, self.position_of_snake[1]] = 1
+            if self.grid[self.position_of_snake[0] + 1, self.position_of_snake[1]] == 2:
+                self.score += 1
+                self.put_food()
+        elif direction == 3:
+            self.grid[self.position_of_snake[0] - 1, self.position_of_snake[1]] = 1
+            if self.grid[self.position_of_snake[0] - 1, self.position_of_snake[1]] == 2:
+                self.score += 1
+                self.put_food()
 
 if __name__ == "__main__":
     game = Snake()
     game.play()
     game.output()
     print(game.get_distance_from_food())
+    game.move_snake(0)
+    game.output()
