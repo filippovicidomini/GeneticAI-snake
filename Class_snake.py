@@ -72,8 +72,36 @@ class Snake:
     def get_score(self):
         return self.score
 
+    def free_position(self, direction):
+        # check that the snake is not going to hit the wall or itself uso la direzione per capire dove andare e get_distance_from_wall per capire se c'è un muro
+        if direction == 0:
+            if self.get_distance_from_wall()[0] == 1:
+                return False
+            else:
+                return True
+        elif direction == 1:
+            if self.get_distance_from_wall()[1] == 1:
+                return False
+            else:
+                return True
+        elif direction == 2:
+            if self.get_distance_from_wall()[2] == 1:
+                return False
+            else:
+                return True
+        elif direction == 3:
+            if self.get_distance_from_wall()[3] == 1:
+                return False
+            else:
+                return True
+
+
     def move_snake(self, direction):
         if direction == 0:
+            if not self.free_position(direction):
+                breakpoint()
+                return self.game_over()
+
             # se incontra il cibo allora aumenta di 1 la lunghezza del serpente e mette un nuovo cibo in una posizione random e non elimina la coda
             if self.grid[self.snake_head[0], self.snake_head[1] + 1] == 2:
                 self.grid[self.snake_head[0], self.snake_head[1] + 1] = 1
@@ -114,6 +142,9 @@ class Snake:
                 self.grid[self.snake_head[0] - 1, self.snake_head[1]] = 1
                 self.grid[self.snake_head[0], self.snake_head[1]] = 0
                 self.snake_head = np.where(self.grid == 1)
+
+    def game_over(self):
+        print("GAME OVER")
 
 
 if __name__ == "__main__":
