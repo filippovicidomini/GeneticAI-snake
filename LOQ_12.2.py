@@ -9,7 +9,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-ripetizione: int = 10 ** 4
+ripetizione: int = 10 ** 5
 n: np.array = np.array([0.1, 1, 100])
 sensitivity = 1
 E0 = 100
@@ -72,7 +72,7 @@ for j in range(len(n)):
     # inserisci nome asse x
     ax[j].set_xlabel('N3 * N4 / Nc = ' + str(round(somma[0] * somma[1] / somma[2], 3)))
     ax[j].set_ylabel('numero di fotoni')
-    ax[j].set_ylim(0, 10000)
+    ax[j].set_ylim(0, 100000)
 
 plt.suptitle('istogrammi per emissione fotoni per \n sorgenti di luce debole: n = 0.1, 1, 100')
 plt.tight_layout()
