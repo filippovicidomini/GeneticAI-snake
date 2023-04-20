@@ -7,7 +7,9 @@
 
 
 import matplotlib.pyplot as plt
+plt.rcParams['text.usetex'] = True
 import numpy as np
+import math
 
 ripetizione: int = 10 ** 5
 n: np.array = np.array([0.1, 1, 100])
@@ -70,7 +72,9 @@ for j in range(len(n)):
                alpha=0.5,
                axis='y')
     # inserisci nome asse x
-    ax[j].set_xlabel('N3 * N4 / Nc = ' + str(round(somma[0] * somma[1] / somma[2], 3)))
+    # voglio inserire una formula in latex
+
+    ax[j].set_xlabel(r'$\N3*N4/Nc$ = ' + str(round(somma[0] * somma[1] / somma[2], 3)))
     ax[j].set_ylabel('numero di fotoni')
     ax[j].set_ylim(0, 100000)
 

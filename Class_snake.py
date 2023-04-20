@@ -28,8 +28,7 @@ class Snake:
 
     def create_grid(self):
         self.grid = [[0 for i in range(10)] for j in range(10)]
-        for i in range(10):
-            self.put_snake_on_grid()
+        self.put_snake_on_grid()
         self.put_food_on_grid()
     def position_of_snake(self):
         return self.position_of_snake
@@ -155,7 +154,6 @@ class Snake:
                 self.update_grid()
         else:
             print('Invalid direction')
-
 
 
 if __name__ == "__main__":
