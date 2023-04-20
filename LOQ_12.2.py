@@ -7,6 +7,11 @@
 
 
 import matplotlib.pyplot as plt
+import matplotlib as mpl
+# imposto il font di matplotlib
+mpl.rcParams['font.family'] = 'serif'
+mpl.rcParams['font.serif'] = 'Times New Roman'
+# imposto il font di latex
 plt.rcParams['text.usetex'] = True
 import numpy as np
 import math
@@ -71,10 +76,8 @@ for j in range(len(n)):
                color='grey',
                alpha=0.5,
                axis='y')
-    # inserisci nome asse x
-    # voglio inserire una formula in latex
 
-    ax[j].set_xlabel(r'$\N3*N4/Nc$ = ' + str(round(somma[0] * somma[1] / somma[2], 3)))
+    ax[j].set_xlabel(r'$\frac{N_3 * N_4}{N_c}$' + ' = ' + str(round(somma[0] * somma[1] / somma[2],3)))
     ax[j].set_ylabel('numero di fotoni')
     ax[j].set_ylim(0, 100000)
 
